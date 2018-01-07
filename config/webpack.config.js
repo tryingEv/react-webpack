@@ -6,7 +6,7 @@ const Uglifyjs = require("uglify-webpack-plugin");
 const webpack = require("webpack");
 module.exports = {
     entry:{
-        main: "./src/index.js",
+        main: "./src/index.js", 
     },
     devtool: "inline-source-map",   //编译期间报错能够追溯到源码位置
     devServer:{
