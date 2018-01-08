@@ -3,7 +3,7 @@ const express = require("express");
 const webpack = require("webpack");
 const webpackMiddleWare = require("webpack-dev-middleware");
 // const webpackDevServer = require("webpack-dev-server");
-let webpackCfg = require("./webpack.config.js");
+let webpackCfg = require("./webpack.dev.js");
 // let options = {
 //     contentBase: "./dist",
 //     // hot: true,

@@ -1,32 +1,45 @@
 const path = require("path");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const initPath = require("./path.js");
 module.exports = {
     entry: {
-        main: "../src/index.js"
+        main: "./src/index.js",
+        vendors: ["react", "react-dom"],
     },
-    plugins: [
-        new CleanWebpackPlugin(["dist"]),
+    resolve:{
+        extensions:[".js", ".json", ".jsx"],
+        alias: {
+            "react": initPath("react"),
+            "react-dom": initPath("react-dom"),
+        },
+    },
+    plugins: [       
         new HtmlWebpackPlugin({
             title: "react-webpack-test",
-            template: "../index.html",
+            template: "./index.html",
             filename: "index.html",
             hash: true,
             cache: true,
             showErrors: true
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ["common", "vendors"],
+            filename: "[name].[chunkhash:8].js",
+            minChunks: 2
+        }),
+
     ],
     output: {
-        filename: "[name].js",
+        filename: "[name].[chunkhash:8].js",    //生成的文件文件名会带有一个hash码
         path: path.resolve(__dirname, "../dist"),
-        publicPath: "/"
+        publicPath: "./"
     },
     module: {
+        noParse:[initPath("react"), initPath("react-dom")],
         rules: [{
-                test: /\.(js|jsx)/,
-                use: [
-                    "babel-loader"
-                ],
+                test: /\.(js|jsx)$/,
+                loader: "babel-loader",
                 exclude: /node_modules/,
                 //没有此配置编译时无法识别jsx代码
                 query: {

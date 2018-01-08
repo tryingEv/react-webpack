@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "build": "webpack",
-    "server": " node ./server.js --env development --watch --open",
+    "build": "webpack --config ./config/webpack.prod.js",
+    "server": " node ./config/server.js --env development --watch --open",
     "start": "webpack-dev-server --open"
   },
   "author": "g-tree",
@@ -35,6 +35,7 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-middleware": "^2.0.3",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.9.7",
+    "webpack-merge": "^4.1.1"
   }
 }

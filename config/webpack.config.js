@@ -2,11 +2,12 @@ const path = require('path');
 const rootPath = __dirname;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const Uglifyjs = require("uglify-webpack-plugin");
+const Uglifyjs = require("uglifyjs-webpack-plugin");
 const webpack = require("webpack");
 module.exports = {
     entry:{
         main: "./src/index.js", 
+        vendors: ["react", "react-dom"]
     },
     devtool: "inline-source-map",   //编译期间报错能够追溯到源码位置
     devServer:{
@@ -30,7 +31,12 @@ module.exports = {
             // chunks: ["main"] //多个入口文件，然后将入口文件引入到生成的html文件中
         }),
         //打包时清除引用文件中未使用的代码，可以减少打包后的代码体积
-        new Uglifyjs()
+        new Uglifyjs(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ["common", "vendors"],
+            filename: "[name].js",
+            minChunks: 2
+        })
     ],
     output:{
         filename: "[name].js",
